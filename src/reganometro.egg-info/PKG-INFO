@@ -1,0 +1,64 @@
+Metadata-Version: 2.4
+Name: reganometro
+Version: 0.1.0
+Summary: Un vigilante de inactividad que te regaña cuando dejas el computador abandonado.
+Author: Tareaaas
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+
+# Reganómetro 😡
+
+Reganómetro es un pequeño programa de escritorio que detecta cuando no estás
+usando el teclado ni moviendo el mouse y te lanza ventanas emergentes con
+regaños enojados y sonidos para que vuelvas a la tarea.
+
+## Características
+
+- Detecta inactividad global en Windows, macOS y Linux/X11.
+- Repite alertas mientras sigas inactivo.
+- Cierra las alertas automáticamente en cuanto vuelve a detectar movimiento o escritura.
+- Vuelve a regañarte si pasas 5 segundos sin hacer nada otra vez.
+- Reproduce pitidos/sonidos de alerta en cada regaño.
+- Abre varias ventanas por alerta para que el regaño sea difícil de ignorar.
+- Incluye modo `--demo` para probarlo aunque tu entorno no exponga actividad global.
+- No instala servicios ni se oculta: se ejecuta en primer plano y se apaga con `Ctrl+C`.
+
+## Uso rápido
+
+```bash
+PYTHONPATH=src python -m reganometro
+```
+
+También puedes instalarlo como paquete editable:
+
+```bash
+python -m pip install -e .
+reganometro
+```
+
+Opciones principales:
+
+| Opción | Descripción |
+| --- | --- |
+| `--idle-seconds` | Segundos sin teclado/mouse antes de empezar a regañar. Por defecto son 5. |
+| `--alert-every` | Frecuencia de repetición del regaño mientras sigas inactivo. Por defecto son 5 segundos. |
+| `--burst-count` | Número de ventanas por alerta. El máximo es 10 para evitar bloquear la sesión. |
+| `--sound-count` | Número de sonidos por alerta. El máximo es 10. |
+| `--no-sound` | Desactiva los sonidos y deja solo las ventanas emergentes. |
+| `--demo` | Usa un temporizador interno si el sistema no permite consultar actividad global. |
+
+## Notas por sistema operativo
+
+- **Windows:** usa `GetLastInputInfo` mediante `ctypes`.
+- **macOS:** usa `ioreg` para leer `HIDIdleTime`.
+- **Linux:** prefiere `xprintidle`; si no existe, intenta `libXss` en X11. En Wayland
+  algunos escritorios bloquean la lectura global de actividad por privacidad.
+- **Sonido:** usa `winsound` en Windows, `afplay` en macOS y `canberra-gtk-play`,
+  `paplay` o `aplay` en Linux. Además intenta el timbre de `tkinter` como respaldo.
+
+## Desarrollo
+
+```bash
+PYTHONPATH=src python -m unittest discover -s tests
+```

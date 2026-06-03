@@ -1,0 +1,14 @@
+README.md
+pyproject.toml
+src/reganometro/__init__.py
+src/reganometro/__main__.py
+src/reganometro/app.py
+src/reganometro/audio.py
+src/reganometro/idle_detection.py
+src/reganometro/notifier.py
+src/reganometro.egg-info/PKG-INFO
+src/reganometro.egg-info/SOURCES.txt
+src/reganometro.egg-info/dependency_links.txt
+src/reganometro.egg-info/entry_points.txt
+src/reganometro.egg-info/top_level.txt
+tests/test_reganometro.py
